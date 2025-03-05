@@ -15,22 +15,19 @@ namespace learnRazor.Pages_Movies
     {
         private readonly AppDbContext _context;
         private readonly ILogger<CreateModel> _logger;
-        public CreateModel(learnRazor.Data.AppDbContext context, ILogger<CreateModel> logger)
+        public IList<string> LoadGenres { get; set; }
+        [BindProperty] public Movie Movie { get; set; } = default!;
+
+        public CreateModel(AppDbContext context, ILogger<CreateModel> logger)
         {
             _context = context;
             _logger = logger;
             LoadGenres = Data.Genres.GetGenres();
         }
-
         public IActionResult OnGet()
         {
             return Page();
         }
-
-        [BindProperty] public Movie Movie { get; set; } = default!;
-
-        public IList<string> LoadGenres { get; set; }
-
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
@@ -38,6 +35,7 @@ namespace learnRazor.Pages_Movies
             {
                 return Page();
             }
+
             Console.WriteLine();
             Movie.Genres.AddRange(Request.Form["genres"]);
             _context.Movies.Add(Movie);

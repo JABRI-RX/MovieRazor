@@ -1,21 +1,38 @@
+using learnRazor.Data;
 using learnRazor.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging;
 
 namespace learnRazor.Pages.Movies
 {
     public class EditModel : PageModel
     {
-        private readonly learnRazor.Data.AppDbContext _context;
-
-        public EditModel(learnRazor.Data.AppDbContext context)
-        {
-            _context = context;
-        }
+        private readonly AppDbContext _context;
 
         [BindProperty]
         public Movie Movie { get; set; } = default!;
+
+        public Dictionary<string, bool> Categories = new();
+        public EditModel(learnRazor.Data.AppDbContext context)
+        {
+            _context = context;
+           
+        }
+
+        public void LoadCategories()
+        {
+            var genres = Genres.GetGenres();
+            foreach (var gen in genres)
+            {
+                if(Movie.Genres.Contains(gen))
+                    Categories.Add(gen,true);
+                else
+                    Categories.Add(gen,false);
+            }
+            Console.WriteLine(Categories);
+        }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,6 +47,7 @@ namespace learnRazor.Pages.Movies
                 return NotFound();
             }
             Movie = movie;
+            LoadCategories();
             return Page();
         }
 
@@ -37,11 +55,17 @@ namespace learnRazor.Pages.Movies
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Request.Form["genres"].Count == 0)
             {
+                LoadCategories();
                 return Page();
             }
 
+            // foreach (var genre in Request.Form["genres"])
+            // {
+            //     Movie.Genres.Add(genre);
+            // }
+            Movie.Genres.AddRange(Request.Form["genres"]);
             _context.Attach(Movie).State = EntityState.Modified;
 
             try
@@ -59,7 +83,7 @@ namespace learnRazor.Pages.Movies
                     throw;
                 }
             }
-
+        
             return RedirectToPage("./Index");
         }
 

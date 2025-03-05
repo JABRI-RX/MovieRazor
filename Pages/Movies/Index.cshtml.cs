@@ -27,11 +27,18 @@ namespace learnRazor.Pages.Movies
         public decimal MinPrice { get; set; }
         [BindProperty(SupportsGet = true)]
         public decimal MaxPrice { get; set; }
-        // [BindProperty(SupportsGet = true)]
-        // public DateTime DatePublisher { get; set; }
-        public async Task OnGetAsync()
+        //sorting
+        public string PriceSort { get; set; }
+        public async Task OnGetAsync(string priceSort)
         {
+            PriceSort = string.IsNullOrEmpty(PriceSort) ? "Asc" : "Desc";
             var movies = await _movieRepository.GetAllMoviesAsync();
+            if (!string.IsNullOrEmpty(priceSort))
+            {
+                movies = _movieRepository.GetMoviesAsQueryable()
+                    .OrderBy(m=> m.Price)
+                    .ToList();
+            }
             if (!string.IsNullOrEmpty(SearchString))
             {
                 movies = await _movieRepository.GetMovieByTitleAsync(SearchString);
@@ -46,7 +53,7 @@ namespace learnRazor.Pages.Movies
             {
                 // movies = movies.Where(m => m.Price < MaxPrice && m.Price > MinPrice);
             }
-            Movie = ;
+            Movie = movies;
 
 
         }

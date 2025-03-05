@@ -14,4 +14,5 @@ public interface IMovieRepository
     Task<IList<Movie>?> GetMovieByTitleAsync(string movieTitle);
     Task<IList<Movie>?> GetMoviesByYearAsync(string dateRelease);
     Task<IList<Movie>?> GetMoviesByGenreAsync(IList<string> genres);
+    IQueryable<Movie> GetMoviesAsQueryable();
 }

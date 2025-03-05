@@ -11,8 +11,8 @@ using learnRazor.Data;
 namespace learnRazor.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250305171813_INit")]
-    partial class INit
+    [Migration("20250305225342_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,17 +32,15 @@ namespace learnRazor.Migrations
 
                     b.Property<string>("ImagUrl")
                         .IsRequired()
-                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("REAL");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

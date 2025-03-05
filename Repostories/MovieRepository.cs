@@ -82,4 +82,9 @@ public class MovieRepository : IMovieRepository
 
         return await movies.ToListAsync();
     }
+
+    public IQueryable<Movie> GetMoviesAsQueryable()
+    {
+        return _context.Movies.AsQueryable();
+    }
 }

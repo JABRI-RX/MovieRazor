@@ -26,6 +26,7 @@
     <br/>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+ 
 <table class="table">
     <thead>
     <tr>
@@ -39,7 +40,9 @@
             @Html.DisplayNameFor(model => model.Movie[0].Genres)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Movie[0].Price)
+            <a asp-page="./Index" asp-route-priceSort="@Model.PriceSort">
+                @Html.DisplayNameFor(model => model.Movie[0].Price)
+            </a>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Movie[0].ImagUrl)

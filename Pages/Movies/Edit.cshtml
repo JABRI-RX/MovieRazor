@@ -1,4 +1,5 @@
 @page "{id:int}"
+@using learnRazor.Models
 @model EditModel
 
 @{
@@ -24,15 +25,24 @@
                 <input asp-for="Movie.ReleaseDate" class="form-control" />
                 <span asp-validation-for="Movie.ReleaseDate" class="text-danger"></span>
             </div>
-            @* <div class="form-group"> *@ 
-            @*     <label asp-for="Movie.Genre" class="control-label"></label> *@
-            @*     <input asp-for="Movie.Genre" class="form-control" /> *@
-            @*     <span asp-validation-for="Movie.Genre" class="text-danger"></span> *@
-            @* </div> *@
+            <div class="form-group">
+                <p>Categories</p>
+                @foreach (var genre in Model.Categories)
+                {
+                    <input type="checkbox" name="genres"  class="form-check-input" value="@genre.Key"  checked="@(genre.Value)">
+                    <label for="genre">@genre.Key</label>
+                    <br/>
+                }
+            </div>
             <div class="form-group">
                 <label asp-for="Movie.Price" class="control-label"></label>
                 <input asp-for="Movie.Price" class="form-control" />
                 <span asp-validation-for="Movie.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Movie.ImagUrl" class="control-label"></label>
+                <input asp-for="Movie.ImagUrl" class="form-control" />
+                <span asp-validation-for="Movie.ImagUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

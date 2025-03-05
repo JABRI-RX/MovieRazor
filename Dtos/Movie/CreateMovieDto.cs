@@ -12,8 +12,8 @@ public class CreateMovieDto
     [Display(Name = "Release Date")]
     public DateTime ReleaseDate { get; set; }
     public IList<string> Genres { get; set; } = [];
-    [Column(TypeName ="decimal(18,2)")]
-    public decimal Price { get; set; }
+ 
+    public double Price { get; set; }
     [Required]
     [DefaultValue("https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg")]
     [MaxLength(200)]
