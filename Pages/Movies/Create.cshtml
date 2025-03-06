@@ -1,0 +1,60 @@
+@page
+@model learnRazor.Pages_Movies.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Movie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Movie.Title" class="control-label"></label>
+                <input asp-for="Movie.Title" class="form-control"  value="Django Unchained"/>
+                <span asp-validation-for="Movie.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Movie.ReleaseDate" class="control-label"></label>
+                <input asp-for="Movie.ReleaseDate" class="form-control" />
+                <span asp-validation-for="Movie.ReleaseDate" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-group">
+                <p>Categories</p>
+                @foreach (var genre in Model.LoadGenres)
+                {
+                    <input type="checkbox" name="genres"  class="form-check-input" value="@genre">
+                    <label for="genre">@genre</label>
+                    <br/>
+                }
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="Movie.Price" class="control-label"></label>
+                <input asp-for="Movie.Price" class="form-control" value="100" />
+                <span asp-validation-for="Movie.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Movie.ImagUrl" class="control-label"></label>
+                <input asp-for="Movie.ImagUrl" class="form-control" value="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR5Lfa4ibICyzzbnwtcbK3BYxq-3Hq8Jb88h-iCVrlAreileTgmiEecVYgYNh-vMyncuq_z1w"/>
+                <span asp-validation-for="Movie.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
